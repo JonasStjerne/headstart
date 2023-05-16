@@ -35,7 +35,7 @@ export const runCli = async () => {
     "technologies",
     "checkbox",
     "Select technologies to use",
-    null,
+    undefined,
     [
       new inquirer.Separator(" = Logging & Analytics = "),
       {
@@ -51,7 +51,7 @@ const prompt = async <optionType>(
   name: keyof options,
   type: "input" | "confirm" | "checkbox",
   message: string,
-  defaultOption: optionType,
+  defaultOption?: optionType,
   choices?: (inquirer.Separator | { name: string })[]
 ) => {
   const result = await inquirer.prompt<{ [name: string]: optionType }>({

@@ -1,6 +1,8 @@
+#! /usr/bin/env node
 import { execa } from "execa";
 import fs from "fs-extra";
 import { options, runCli } from "./cli.js";
+import { insert } from "./utils/edit-file";
 
 const main = async () => {
   const options = await runCli();
@@ -12,9 +14,29 @@ const initProject = async (options: options) => {
   if (!fs.existsSync(dir)) {
     fs.emptyDirSync(dir);
   }
-  if (options["git"]) {
-    await execa("git", ["init"], { cwd: dir });
-  }
+
+  fs.copySync("./src/templates/base", dir);
+
+  options["git"] ? await execa("git", ["init"], { cwd: dir }) : null;
+
+  options["technologies"]?.includes("plausible") ? installPlausible(dir) : null;
+};
+
+const installPlausible = async (dir: string): Promise<void> => {
+  await addGlobalProvider(
+    dir,
+    '<PlausibleProvider domain="example.com">',
+    "</PlausibleProvider>"
+  );
+};
+
+const addGlobalProvider = async (
+  dir: string,
+  startTag: string,
+  closeTag: string
+) => {
+  await insert(dir, startTag, "// Providers start", "after");
+  await insert(dir, closeTag, "// Providers end", "before");
 };
 
 main().catch((err) => {
