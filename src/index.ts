@@ -2,7 +2,6 @@
 import { execa } from "execa";
 import fs from "fs-extra";
 import { options, runCli } from "./cli.js";
-import { insert } from "./utils/edit-file";
 
 const main = async () => {
   const options = await runCli();
@@ -10,6 +9,7 @@ const main = async () => {
 };
 
 const initProject = async (options: options) => {
+  console.log(options);
   const dir = `./${options["projectName"]}`;
   if (!fs.existsSync(dir)) {
     fs.emptyDirSync(dir);
@@ -19,10 +19,15 @@ const initProject = async (options: options) => {
 
   options["git"] ? await execa("git", ["init"], { cwd: dir }) : null;
 
-  options["technologies"]?.includes("plausible") ? installPlausible(dir) : null;
+  console.log(options["technologies"]);
+  options["technologies"]?.includes("Plausible")
+    ? installPlausible(`${dir}/src/app/page.tsx`)
+    : null;
 };
 
 const installPlausible = async (dir: string): Promise<void> => {
+  console.log("installing plausible");
+  console.log(dir);
   await addGlobalProvider(
     dir,
     '<PlausibleProvider domain="example.com">',
@@ -44,53 +49,34 @@ main().catch((err) => {
   process.exit(1);
 });
 
-// inquirer
-//   .prompt([
-//     {
-//       type: "checkbox",
-//       message: "Select technologies to use",
-//       name: "technologies",
-//       choices: [
-//         new inquirer.Separator(" = Logging & Analytics = "),
-//         {
-//           name: "Plausible",
-//         },
-//         {
-//             name: "Datadog",
-//           },
-//           {
-//             name: "Honeybadger",
-//           },
-//           new inquirer.Separator(" = Authentication = "),
-//         {
-//           name: "Keycloak",
-//         },
-
-//       ],
-//       validate(answer) {
-//         if (answer.length < 1) {
-//           return "You must choose at least one topping.";
-//         }
-
-//         return true;
-//       },
-//     },
-//   ])
-//   .then((answers) => {
-//     console.log(JSON.stringify(answers, null, "  "));
-//   });
-
-// import { Command } from "commander";
-// const program = new Command();
-// program.name("Headstart").description("Headstart CLI");
-
-// program
-//   .argument(
-//     "[dir]",
-//     "The name of the application, as well as the name of the directory to create"
-//   )
-//   .option("--noGit", "Skip git initialization", false);
-
-// program.parse(process.argv);
-// const projectName = program.args[0];
-// const cliOptions = program.opts();
+export const insert = (
+  filename: string,
+  insert: string,
+  matcher: string,
+  direction: "before" | "after" = "after"
+) => {
+  return new Promise<void>(function (resolve) {
+    fs.readFile(filename, "utf-8", function (err, data) {
+      if (err) {
+        throw err;
+      }
+      let regex = new RegExp(matcher, "g");
+      if (direction === "before") {
+        console.log("before");
+        data = data.replace(regex, `${insert} $&`);
+      }
+      if (direction === "after") {
+        console.log("after");
+        data = data.replace(regex, `$& ${insert}`);
+      }
+      console.log(data);
+      fs.writeFile(filename, data, "utf-8", function (err) {
+        if (err) {
+          throw err;
+        } else {
+          resolve();
+        }
+      });
+    });
+  });
+};

@@ -31,7 +31,7 @@ export const runCli = async () => {
     true
   );
 
-  const tech = await prompt<string[]>(
+  options["technologies"] = await prompt<string[]>(
     "technologies",
     "checkbox",
     "Select technologies to use",
