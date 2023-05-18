@@ -12,10 +12,10 @@ export const insert = (
       }
       let regex = new RegExp(matcher, "g");
       if (direction === "before") {
-        data = data.replace(regex, `${insert} $&`);
+        data = data.replace(regex, `\n${insert} $&`);
       }
       if (direction === "after") {
-        data = data.replace(regex, `$& ${insert}`);
+        data = data.replace(regex, `$& \n${insert}`);
       }
       fs.writeFile(filename, data, "utf-8", function (err) {
         if (err) {
