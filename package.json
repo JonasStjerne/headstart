@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "multiply": "src/index.js"
+    "headstart": "build/index.js"
   },
   "type": "module",
   "author": "",
