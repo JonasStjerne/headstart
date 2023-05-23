@@ -1,4 +1,5 @@
 import inquirer from "inquirer";
+import { installer } from "./models/installer";
 
 type promptOfTypeInput = "projectName";
 type promptOfTypeBoolean = "git";
@@ -14,7 +15,7 @@ export type options = Partial<
   }
 >;
 
-export const runCli = async () => {
+export const runCli = async (installers: installer[]) => {
   const options: options = {};
 
   options["projectName"] = await prompt<string>(

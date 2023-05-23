@@ -2,24 +2,35 @@
 import { execa } from "execa";
 import fs from "fs-extra";
 import { options, runCli } from "./cli.js";
-import { installPlausible } from "./installers/plausible.js";
+import { plausible } from "./installers/plausible.js";
+import { installer } from "./models/installer.js";
+import { PKG_ROOT, PROCESS_PATH } from "./utils/consts.js";
+
+const installers: installer[] = [
+  plausible,
+  // installHoneyBadger,
+];
 
 const main = async () => {
-  const options = await runCli();
+  const options = await runCli(installers);
   initProject(options);
 };
-
 const initProject = async (options: options) => {
-  const dir = `./${options["projectName"]}`;
+  const dir = PROCESS_PATH + "/" + options["projectName"];
+
   if (!fs.existsSync(dir)) {
     fs.emptyDirSync(dir);
   }
 
-  fs.copySync("./src/templates/base", dir);
+  fs.copySync(`${PKG_ROOT}/src/templates/base`, dir);
 
   options["git"] ? await execa("git", ["init"], { cwd: dir }) : null;
 
-  options["technologies"]?.includes("Plausible") ? installPlausible(dir) : null;
+  installers.forEach(async (installer) => {
+    options["technologies"]?.includes(installer.name)
+      ? await installer.install(dir)
+      : null;
+  });
 };
 
 main().catch((err) => {
