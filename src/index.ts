@@ -26,11 +26,11 @@ const initProject = async (options: options) => {
 
   options["git"] ? await execa("git", ["init"], { cwd: dir }) : null;
 
-  installers.forEach(async (installer) => {
+  for (const installer of installers) {
     options["technologies"]?.includes(installer.name)
       ? await installer.install(dir)
       : null;
-  });
+  }
 };
 
 main().catch((err) => {

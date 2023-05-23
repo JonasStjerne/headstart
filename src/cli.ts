@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import { installer } from "./models/installer";
+import { installer, installerCatagories } from "./models/installer.js";
 
 type promptOfTypeInput = "projectName";
 type promptOfTypeBoolean = "git";
@@ -32,17 +32,30 @@ export const runCli = async (installers: installer[]) => {
     true
   );
 
+  const cliChoiceArr = [];
+  for (const category in installerCatagories) {
+    if (!isNaN(Number(category))) {
+      continue;
+    }
+    cliChoiceArr.push(new inquirer.Separator(` = ${category} = `));
+    for (const installer of installers) {
+      if (
+        installer.category ===
+        installerCatagories[category as keyof typeof installerCatagories]
+      ) {
+        cliChoiceArr.push({
+          name: installer.name,
+        });
+      }
+    }
+  }
+
   options["technologies"] = await prompt<string[]>(
     "technologies",
     "checkbox",
     "Select technologies to use",
     undefined,
-    [
-      new inquirer.Separator(" = Logging & Analytics = "),
-      {
-        name: "Plausible",
-      },
-    ]
+    cliChoiceArr
   );
 
   return options;
