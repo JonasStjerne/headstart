@@ -22,7 +22,7 @@ const initProject = async (options: options) => {
 		fs.emptyDirSync(dir);
 	}
 
-	fs.copySync(`${PKG_ROOT}/src/templates/base`, dir);
+	fs.copySync(`${PKG_ROOT}/src/template`, dir);
 
 	options["git"] ? await execa("git", ["init"], { cwd: dir }) : null;
 

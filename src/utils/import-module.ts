@@ -12,7 +12,9 @@ export const importModule = async ({
 	isDefault: boolean;
 }) => {
 	const importStatement = `import ${
-		isDefault ? modules : `{ ${modules.join(", ")} }`
+		isDefault && modules.length === 1
+			? modules
+			: `{ ${modules.join(", ")} }`
 	} from "${library}";`;
 	await insert({
 		filename: file,

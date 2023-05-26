@@ -1,18 +1,24 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "module": "es2020",
-    "lib": ["es6"],
-    "allowJs": true,
-    "outDir": "build",
-    "rootDir": "src",
-    "esModuleInterop": true,
-    "types": ["node"],
-    "skipLibCheck": true,
-    "moduleResolution": "node",
-    "jsx": "preserve",
-    "strict": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["src/**/*.spec.ts", "node_modules", "build", "src/templates/**"]
+	"compilerOptions": {
+		"target": "es5",
+		"module": "es2020",
+		"lib": ["es6"],
+		"allowJs": true,
+		"outDir": "build",
+		"rootDir": "src",
+		"esModuleInterop": true,
+		"types": ["node"],
+		"skipLibCheck": true,
+		"moduleResolution": "node",
+		"jsx": "preserve",
+		"strict": true
+	},
+	"include": ["src/**/*"],
+	"exclude": [
+		"src/**/*.spec.ts",
+		"node_modules",
+		"build",
+		"src/template/**",
+		"src/installers/*/templates/**"
+	]
 }
