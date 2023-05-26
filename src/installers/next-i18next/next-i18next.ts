@@ -1,45 +1,46 @@
 import fs from "fs-extra";
-import { installer, installerCatagories } from "../../models/installer";
-import { addPackage } from "../../utils/add-package";
-import { PKG_ROOT } from "../../utils/consts";
-import { insert } from "../../utils/edit-file";
-import { importModule } from "../../utils/import-module";
+import { projectRootPath } from "../../index.js";
+import { installer, installerCatagories } from "../../models/installer.js";
+import { addPackage } from "../../utils/add-package.js";
+import { PKG_ROOT } from "../../utils/consts.js";
+import { insert } from "../../utils/edit-file.js";
+import { importModule } from "../../utils/import-module.js";
 
 export const i18next: installer = {
 	name: "Internationalization",
 	category: installerCatagories["Visuals"],
-	install: async (dir: string) => {
-		await addPackage(`"next-i18next": "latest"`, dir);
-		await addPackage(`"react-i18next": "latest"`, dir);
-		await addPackage(`"i18next": "latest"`, dir);
+	install: async () => {
+		await addPackage(`"next-i18next": "latest"`, projectRootPath);
+		await addPackage(`"react-i18next": "latest"`, projectRootPath);
+		await addPackage(`"i18next": "latest"`, projectRootPath);
 		await insert({
-			filename: dir + "/next.config.js",
+			filename: projectRootPath + "/next.config.js",
 			insert: "i18n,",
 			matcher: "// Next.js config",
 			direction: "after",
 		});
 		await insert({
-			filename: dir + "/next.config.js",
+			filename: projectRootPath + "/next.config.js",
 			insert: "const { i18n } = require('./next-i18next.config')",
 			matcher: "// Imports",
 			direction: "after",
 		});
 		fs.copySync(
 			`${PKG_ROOT}/src/installers/next-i18next/templates/next-i18next.config.js`,
-			dir
+			projectRootPath
 		);
 		fs.copySync(
 			`${PKG_ROOT}/src/installers/next-i18next/templates/locales`,
-			`${dir}/public`
+			`${projectRootPath}/public`
 		);
 		importModule({
 			modules: ["appWithTranslation"],
-			file: `${dir}/pages/_app.tsx`,
+			file: `${projectRootPath}/pages/_app.tsx`,
 			library: "next-i18next",
 			isDefault: false,
 		});
 		insert({
-			filename: `${dir}/pages/_app.tsx`,
+			filename: `${projectRootPath}/pages/_app.tsx`,
 			insert: "export default appWithTranslation(MyApp)",
 			matcher: "// Lower file",
 			direction: "after",

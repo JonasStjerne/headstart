@@ -1,3 +1,4 @@
+import { projectRootPath } from "../index.js";
 import { installerCatagories } from "../models/installer.js";
 import { addGlobalProvider } from "../utils/add-global-provider.js";
 import { addPackage } from "../utils/add-package.js";
@@ -7,16 +8,16 @@ export const plausible = {
 	name: "Plausible",
 	category: installerCatagories["Logging & Analytics"],
 
-	install: async (dir: string) => {
-		await addPackage(`"react-plausible": "^1.0.0"`, dir);
+	install: async () => {
+		await addPackage(`"react-plausible": "^1.0.0"`, projectRootPath);
 		await importModule({
 			modules: ["PlausibleProvider"],
-			file: `${dir}/src/app/pages/_app.tsx`,
+			file: `${projectRootPath}/src/app/pages/_app.tsx`,
 			library: "react-plausible",
 			isDefault: true,
 		});
 		await addGlobalProvider(
-			dir,
+			projectRootPath,
 			'<PlausibleProvider domain="example.com">',
 			"</PlausibleProvider>"
 		);

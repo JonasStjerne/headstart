@@ -10,27 +10,34 @@ import { installer } from "./models/installer.js";
 import { PKG_ROOT, PROCESS_PATH } from "./utils/consts.js";
 
 const installers: installer[] = [plausible, installHoneyBadger, mui, i18next];
+export let projectRootPath: string;
 
 const main = async () => {
 	const options = await runCli(installers);
 	initProject(options);
 };
 const initProject = async (options: options) => {
-	const dir = PROCESS_PATH + "/" + options["projectName"];
+	projectRootPath = `${PROCESS_PATH}/${options["projectName"]}`;
 
-	if (!fs.existsSync(dir)) {
-		fs.emptyDirSync(dir);
+	if (!fs.existsSync(projectRootPath)) {
+		fs.emptyDirSync(projectRootPath);
 	}
 
-	fs.copySync(`${PKG_ROOT}/src/template`, dir);
+	fs.copySync(`${PKG_ROOT}/src/template`, projectRootPath);
 
-	options["git"] ? await execa("git", ["init"], { cwd: dir }) : null;
+	options["git"]
+		? await execa("git", ["init"], { cwd: projectRootPath })
+		: null;
 
 	for (const installer of installers) {
 		options["technologies"]?.includes(installer.name)
-			? await installer.install(dir)
+			? await installer.install()
 			: null;
 	}
+
+	await execa("npm", ["i"], { cwd: projectRootPath });
+	//To do format with prettier after install
+	// await execa("npm", ["run", "format"], { cwd: dir });
 };
 
 main().catch((err) => {
