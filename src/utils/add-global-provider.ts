@@ -1,11 +1,21 @@
 import { insert } from "./edit-file.js";
 
 export const addGlobalProvider = async (
-  dir: string,
-  startTag: string,
-  closeTag: string
+	dir: string,
+	startTag: string,
+	closeTag: string
 ) => {
-  const targetFile = `${dir}/src/app/page.tsx`;
-  await insert(targetFile, startTag, "// Providers start", "after");
-  await insert(targetFile, closeTag, "// Providers end", "before");
+	const targetFile = `${dir}/src/app/pages/_app.tsx`;
+	await insert({
+		filename: targetFile,
+		insert: startTag,
+		matcher: "// Providers start",
+		direction: "after",
+	});
+	await insert({
+		filename: targetFile,
+		insert: closeTag,
+		matcher: "// Providers end",
+		direction: "before",
+	});
 };

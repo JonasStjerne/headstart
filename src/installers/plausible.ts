@@ -9,7 +9,7 @@ export const plausible = {
 
   install: async (dir: string) => {
     await addPackage(`"react-plausible": "^1.0.0"`, dir);
-    await importModule(["PlausibleProvider"], dir, "react-plausible", true);
+    await importModule({modules: ["PlausibleProvider"], file: `${dir}/src/app/pages/_app.tsx`, "react-plausible", true});
     await addGlobalProvider(
       dir,
       '<PlausibleProvider domain="example.com">',
