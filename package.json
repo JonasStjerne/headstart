@@ -10,7 +10,8 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"bin": {
-		"headstart": "build/index.js"
+		"headstart": "build/index.js",
+		"preheadstart": "chmod +x ./build/index.js"
 	},
 	"type": "module",
 	"author": "",
