@@ -26,21 +26,21 @@ export const i18next: installer = {
 			direction: "after",
 		});
 		fs.copySync(
-			`${PKG_ROOT}/src/installers/next-i18next/templates/next-i18next.config.js`,
-			projectRootPath
+			`${PKG_ROOT}src/installers/next-i18next/templates/next-i18next.config.js`,
+			`${projectRootPath}/next-i18next.config.js`
 		);
 		fs.copySync(
-			`${PKG_ROOT}/src/installers/next-i18next/templates/locales`,
-			`${projectRootPath}/public`
+			`${PKG_ROOT}src/installers/next-i18next/templates/locales`,
+			`${projectRootPath}/public/locales`
 		);
 		importModule({
 			modules: ["appWithTranslation"],
-			file: `${projectRootPath}/pages/_app.tsx`,
+			file: `${projectRootPath}/src/app//pages/_app.tsx`,
 			library: "next-i18next",
 			isDefault: false,
 		});
 		insert({
-			filename: `${projectRootPath}/pages/_app.tsx`,
+			filename: `${projectRootPath}/src/app/pages/_app.tsx`,
 			insert: "export default appWithTranslation(MyApp)",
 			matcher: "// Lower file",
 			direction: "after",

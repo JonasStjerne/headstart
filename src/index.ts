@@ -14,6 +14,7 @@ export let projectRootPath: string;
 
 const main = async () => {
 	const options = await runCli(installers);
+	console.log("Creating project... This may take a few minutes.");
 	initProject(options);
 };
 const initProject = async (options: options) => {
@@ -36,7 +37,8 @@ const initProject = async (options: options) => {
 	}
 
 	await execa("npm", ["i"], { cwd: projectRootPath });
-	//To do format with prettier after install
+	//Todo format with prettier after install
+	//Todo cleanup all comments used to reference lines
 	// await execa("npm", ["run", "format"], { cwd: dir });
 };
 

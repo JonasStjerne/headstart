@@ -1,9 +1,9 @@
-import { PROCESS_PATH } from "./consts.js";
+import { projectRootPath } from "../index.js";
 import { insert } from "./edit-file.js";
 
 export const addPackage = async (dependencies: string, dir: string) => {
 	insert({
-		filename: `${PROCESS_PATH}/package.json`,
+		filename: `${projectRootPath}/package.json`,
 		insert: `${dependencies},`,
 		matcher: '"dependencies": {',
 		direction: "after",

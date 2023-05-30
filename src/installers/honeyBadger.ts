@@ -1,4 +1,3 @@
-import { execa } from "execa";
 import { projectRootPath } from "../index.js";
 import { installer, installerCatagories } from "../models/installer.js";
 import { addEnvVar } from "../utils/add-env-var.js";
@@ -13,10 +12,10 @@ export const installHoneyBadger: installer = {
 	install: async () => {
 		await addPackage(`"@honeybadger-io/react": "^5.4.1"`, projectRootPath);
 		await addPackage(`"@honeybadger-io/nextjs": "^5.4.1"`, projectRootPath);
-		await execa("npm", ["i"], { cwd: projectRootPath });
-		await execa("npx", ["honeybadger-copy-config-files"], {
-			cwd: projectRootPath,
-		});
+		// await execa("npm", ["i"], { cwd: projectRootPath });
+		// await execa("npx", ["honeybadger-copy-config-files"], {
+		// 	cwd: projectRootPath,
+		// });
 		await importModule({
 			modules: ["Honeybadger", "HoneybadgerErrorBoundary"],
 			file: `${projectRootPath}/src/app/pages/_app.tsx`,

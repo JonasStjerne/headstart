@@ -9,7 +9,7 @@ export const plausible = {
 	category: installerCatagories["Logging & Analytics"],
 
 	install: async () => {
-		await addPackage(`"react-plausible": "^1.0.0"`, projectRootPath);
+		await addPackage(`"next-plausible": "latest"`, projectRootPath);
 		await importModule({
 			modules: ["PlausibleProvider"],
 			file: `${projectRootPath}/src/app/pages/_app.tsx`,
