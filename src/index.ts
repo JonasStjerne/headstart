@@ -2,21 +2,26 @@
 import { execa } from "execa";
 import fs from "fs-extra";
 import { options, runCli } from "./cli.js";
-import { installHoneyBadger } from "./installers/honeyBadger.js";
-import { mui } from "./installers/mui.js";
-import { i18next } from "./installers/next-i18next/next-i18next.js";
-import { plausible } from "./installers/plausible.js";
-import { installer } from "./models/installer.js";
+import { nextjsInstallers } from "./installers/nextjs/index.js";
+import { frameworks } from "./models/framework.js";
 import { PKG_ROOT, PROCESS_PATH } from "./utils/consts.js";
 
-const installers: installer[] = [plausible, installHoneyBadger, mui, i18next];
+const frameworks: frameworks = [
+	{
+		name: "Next.js",
+		templateName: "nextjs",
+		installers: nextjsInstallers,
+	},
+];
+
 export let projectRootPath: string;
 
 const main = async () => {
-	const options = await runCli(installers);
+	const options = await runCli(frameworks);
 	console.log("Creating project... This may take a few minutes.");
 	initProject(options);
 };
+
 const initProject = async (options: options) => {
 	projectRootPath = `${PROCESS_PATH}/${options["projectName"]}`;
 
@@ -24,11 +29,19 @@ const initProject = async (options: options) => {
 		fs.emptyDirSync(projectRootPath);
 	}
 
-	fs.copySync(`${PKG_ROOT}/src/template`, projectRootPath);
+	const templateName = frameworks.find(
+		(framework) => framework.name === options["framework"]
+	)!.templateName;
+
+	fs.copySync(`${PKG_ROOT}/src/${templateName}`, projectRootPath);
 
 	options["git"]
 		? await execa("git", ["init"], { cwd: projectRootPath })
 		: null;
+
+	const installers = frameworks.find(
+		(framework) => framework.name === options["framework"]
+	)!.installers;
 
 	for (const installer of installers) {
 		options["technologies"]?.includes(installer.name)

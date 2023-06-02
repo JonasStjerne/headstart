@@ -1,6 +1,6 @@
-import { projectRootPath } from "../index.js";
-import { installerCatagories } from "../models/installer.js";
-import { addPackage } from "../utils/add-package.js";
+import { projectRootPath } from "../../index.js";
+import { installerCatagories } from "../../models/installer.js";
+import { addPackage } from "../../utils/add-package.js";
 
 export const mui = {
 	name: "MUI",

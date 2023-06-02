@@ -18,7 +18,7 @@
 		"src/**/*.spec.ts",
 		"node_modules",
 		"build",
-		"src/template/**",
+		"src/base-templates/**",
 		"src/installers/*/templates/**"
 	]
 }

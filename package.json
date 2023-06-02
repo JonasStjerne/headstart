@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "npm run build && node build/index.js",
 		"build": "rimraf ./build && tsc",
-		"postbuild": "cp -r ./src/template ./build/template && cpx \"./src/template/**/*\" ./build/template && cpx \"./src/installers/*/templates/**/*\" ./build/installers/",
+		"postbuild": "cp -r ./src/base-templates ./build/base-templates && cpx \"./src/installers/*/*/templates/**/*\" ./build/installers/",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"bin": {

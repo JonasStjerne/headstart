@@ -1,10 +1,10 @@
 import fs from "fs-extra";
-import { projectRootPath } from "../../index.js";
-import { installer, installerCatagories } from "../../models/installer.js";
-import { addPackage } from "../../utils/add-package.js";
-import { PKG_ROOT } from "../../utils/consts.js";
-import { insert } from "../../utils/edit-file.js";
-import { importModule } from "../../utils/import-module.js";
+import { projectRootPath } from "../../../index.js";
+import { installer, installerCatagories } from "../../../models/installer.js";
+import { addPackage } from "../../../utils/add-package.js";
+import { PKG_ROOT } from "../../../utils/consts.js";
+import { insert } from "../../../utils/edit-file.js";
+import { importModule } from "../../../utils/import-module.js";
 
 export const i18next: installer = {
 	name: "Internationalization",

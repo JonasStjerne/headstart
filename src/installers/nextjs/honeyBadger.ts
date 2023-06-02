@@ -1,10 +1,10 @@
-import { projectRootPath } from "../index.js";
-import { installer, installerCatagories } from "../models/installer.js";
-import { addEnvVar } from "../utils/add-env-var.js";
-import { addGlobalProvider } from "../utils/add-global-provider.js";
-import { addPackage } from "../utils/add-package.js";
-import { insert } from "../utils/edit-file.js";
-import { importModule } from "../utils/import-module.js";
+import { projectRootPath } from "../../index.js";
+import { installer, installerCatagories } from "../../models/installer.js";
+import { addEnvVar } from "../../utils/add-env-var.js";
+import { addGlobalProvider } from "../../utils/add-global-provider.js";
+import { addPackage } from "../../utils/add-package.js";
+import { insert } from "../../utils/edit-file.js";
+import { importModule } from "../../utils/import-module.js";
 
 export const installHoneyBadger: installer = {
 	name: "HoneyBadger",
