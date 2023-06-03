@@ -7,4 +7,5 @@ export type installer = {
 export enum installerCatagories {
 	"Logging & Analytics",
 	"Visuals",
+	"Security",
 }
