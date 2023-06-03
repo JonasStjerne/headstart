@@ -2,6 +2,7 @@
 import { execa } from "execa";
 import fs from "fs-extra";
 import { options, runCli } from "./cli.js";
+import { nestjsInstallers } from "./installers/nestjs/index.js";
 import { nextjsInstallers } from "./installers/nextjs/index.js";
 import { frameworks } from "./models/framework.js";
 import { PKG_ROOT, PROCESS_PATH } from "./utils/consts.js";
@@ -12,13 +13,18 @@ const frameworks: frameworks = [
 		templateName: "nextjs",
 		installers: nextjsInstallers,
 	},
+	{
+		name: "NestJS",
+		templateName: "nestjs",
+		installers: nestjsInstallers,
+	},
 ];
 
 export let projectRootPath: string;
 
 const main = async () => {
 	const options = await runCli(frameworks);
-	console.log("Creating project... This may take a few minutes.");
+	console.info("Creating project... This may take a few minutes.");
 	initProject(options);
 };
 
@@ -33,7 +39,10 @@ const initProject = async (options: options) => {
 		(framework) => framework.name === options["framework"]
 	)!.templateName;
 
-	fs.copySync(`${PKG_ROOT}/src/${templateName}`, projectRootPath);
+	fs.copySync(
+		`${PKG_ROOT}src/base-templates/${templateName}`,
+		projectRootPath
+	);
 
 	options["git"]
 		? await execa("git", ["init"], { cwd: projectRootPath })

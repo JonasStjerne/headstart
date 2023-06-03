@@ -2,7 +2,7 @@ import fs from "fs-extra";
 import { projectRootPath } from "../../../index.js";
 import { installer, installerCatagories } from "../../../models/installer.js";
 import { addPackage } from "../../../utils/add-package.js";
-import { PKG_ROOT } from "../../../utils/consts.js";
+import { INSTALLERS_BASE_PATH } from "../../../utils/consts.js";
 import { insert } from "../../../utils/edit-file.js";
 import { importModule } from "../../../utils/import-module.js";
 
@@ -25,12 +25,13 @@ export const i18next: installer = {
 			matcher: "// Imports",
 			direction: "after",
 		});
+		const installerPath = INSTALLERS_BASE_PATH("nextjs");
 		fs.copySync(
-			`${PKG_ROOT}src/installers/next-i18next/templates/next-i18next.config.js`,
+			`${installerPath}/next-i18next/templates/next-i18next.config.js`,
 			`${projectRootPath}/next-i18next.config.js`
 		);
 		fs.copySync(
-			`${PKG_ROOT}src/installers/next-i18next/templates/locales`,
+			`${installerPath}/next-i18next/templates/locales`,
 			`${projectRootPath}/public/locales`
 		);
 		importModule({
