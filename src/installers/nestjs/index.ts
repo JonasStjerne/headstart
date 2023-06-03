@@ -9,6 +9,5 @@ export const nestjsInstallers: installer[] = [
 
 // JWT basic auth with passport
 // Honeybadger
-// Dockerfile
 // Redis cache
 // Stripe integration

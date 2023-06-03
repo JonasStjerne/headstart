@@ -12,5 +12,9 @@ export const installDockerfile: installer = {
 			`${installerPath}/dockerfile/templates/Dockerfile`,
 			`${projectRootPath}/Dockerfile`
 		);
+		fs.copySync(
+			`${installerPath}/dockerfile/templates/.dockerignore`,
+			`${projectRootPath}/.dockerignore`
+		);
 	},
 };
