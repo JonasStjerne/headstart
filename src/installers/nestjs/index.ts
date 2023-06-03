@@ -1,11 +1,13 @@
-import { installer } from "../../models/installer";
+import { installer } from "../../models/installer.js";
+import { installDockerfile } from "./dockerfile/docker.js";
 import { installRatelimit } from "./ratelimit.js";
 
-export const nestjsInstallers: installer[] = [installRatelimit];
+export const nestjsInstallers: installer[] = [
+	installRatelimit,
+	installDockerfile,
+];
 
-// Ratelimiting
 // JWT basic auth with passport
-// TypeORM
 // Honeybadger
 // Dockerfile
 // Redis cache

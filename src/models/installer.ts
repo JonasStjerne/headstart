@@ -8,4 +8,5 @@ export enum installerCatagories {
 	"Logging & Analytics",
 	"Visuals",
 	"Security",
+	"Other",
 }
