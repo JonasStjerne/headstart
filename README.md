@@ -1,20 +1,22 @@
-### CLI tool to give your project a head start
+# CLI tool for scaffolding NestJS & Next.js projects
+My attempt at a simple version of the [yo CLI tool](https://github.com/yeoman/yo) for Yeoman generators.
 
-# Headstart (supports Next.js)
+Give your project a head start by using headstart CLI tool to scaffold the project with various technologies. Supports scaffolding Next.js & NestJS projects. The CLI will ask you which technologies your project should include and set up a complete project with these technologies ready to go.
 
-Give your project a head start by using headstart CLI tool to scaffold the project with various technologies. Currently only supports scaffolding Next.js projects. The CLI will ask you which technologies your project should include and set up a complete project with these technologies ready to go.
+Clone the repo and run `npm i -g` in the root directory. Go to your desired location for a new project and run `npx headstart` to create your project. The CLI will prompt you for a series of questions to generate your project.
 
-Run `npx headstart` to get started
+![demo](https://github.com/JonasStjerne/headstart/assets/73853586/e58ec692-623a-46c9-9cee-d0409858ec68)
 
-The currently supported technologies are:
 
+## The currently supported technologies/options
+
+### Next.js
 -   Plausible
 -   Honeybadger
 -   i18next (i18n)
 -   MUI
--   ~~React testing library~~
--   ~~MSWJS (mocked HTTP for testing)~~
--   ~~Cypress~~
--   ~~NextAuth~~
--   ~~SCSS~~
--   ~~Storybook~~
+
+### NestJS
+-  Ratelimiting
+-  Docker setup
+
