@@ -7,8 +7,8 @@ export const mui = {
 	category: installerCatagories["Visuals"],
 
 	install: async () => {
-		await addPackage(`"@mui/material": "^1.0.0"`, projectRootPath);
-		await addPackage(`"@emotion/react": "^1.0.0"`, projectRootPath);
-		await addPackage(`"@emotion/styled": "^1.0.0"`, projectRootPath);
+		await addPackage(`"@mui/material": "latest"`, projectRootPath);
+		await addPackage(`"@emotion/react": "latest"`, projectRootPath);
+		await addPackage(`"@emotion/styled": "latest"`, projectRootPath);
 	},
 };
